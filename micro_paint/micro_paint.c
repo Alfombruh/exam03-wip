@@ -20,6 +20,18 @@ typedef struct s_paint
 } t_paint;
 
 
+static void ft_round(float *f)
+{
+	int i;
+
+	i = (int)*f;
+	//printf("float is == %f\n", *f);
+	if(i < *f)
+		*f = i + 1;
+	//printf("i + 1 == %d\n", i + 1);
+	//printf("floatRounded->%f\n", *f);
+}
+
 //check wether we have to make a full square or a empty one,
 //if R then we see if we are inside the area of the square and then substitute those with the char of choice
 //if r we see if we are inside the area of the square (the first part of the if) and then if we are inside the area of the inner square (the part that must be empty) and the we substitute the borders with the char of choice
@@ -34,7 +46,7 @@ static int ft_square(t_paint *p)
 		{
 			while (++j < p->wd)
 			{
-				if (j >= p->x && i >= p->y && j < p->x + p->sizex && i < p->y + p->sizey)
+				if (j >= p->x && i >= p->y && j <= p->x + p->sizex  && i <= p->y + p->sizey)
 					p->map[i][j] = p->c;
 			}
 			j = -1;
@@ -46,7 +58,7 @@ static int ft_square(t_paint *p)
 		{
 			while (++j < p->wd)
 			{
-				if ((j >= p->x && i >= p->y && j < p->x + p->sizex && i < p->y + p->sizey) && !(j >= p->x + 1 && i >= p->y + 1 && j < p->x + p->sizex - 1 && i < p->y + p->sizey - 1))
+				if ((j >= p->x && i >= p->y && j <= p->x + p->sizex  && i <= p->y + p->sizey ) && !(j >= p->x +1  && i >= p->y +1  && j < p->x + p->sizex -1 && i < p->y + p->sizey -1))
 					p->map[i][j] = p->c;
 			}
 			j = -1;
@@ -104,6 +116,10 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		read = fscanf(p.fd, "%c %f %f %f %f %c\n", &p.r, &p.x, &p.y, &p.sizex, &p.sizey, &p.c);
+		ft_round(&p.x);
+		ft_round(&p.y);
+		//ft_round(&p.sizex);
+		//ft_round(&p.sizey);
 		if (read == -1)
 			break ;
 		if (ft_square(&p))

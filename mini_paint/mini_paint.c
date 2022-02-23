@@ -19,22 +19,34 @@ typedef struct s_paint
 	char	c;
 } t_paint;
 
+static void ft_round(float *f)
+{
+	int i;
+
+	i = (int)*f;
+	//printf("float is == %f\n", *f);
+	if(i < *f)
+		*f = i + 1;
+	//printf("i + 1 == %d\n", i + 1);
+	//printf("floatRounded->%f\n", *f);
+}
+
 static int ft_ratio(t_paint *p, int i, int j)
 {
 	float ratio;
 	float absx;
 	float absy;
 
-	absx = p->x - j;
-	absy = p->y - i;
+	absx = j - p->x;
+	absy = i - p->y;
 	if (p->r == 'C')
 	{
-		ratio = sqrtf(powf(absx, 2) + powf(absy, 2));
+		ratio = sqrtf(pow(absx, 2) + pow(absy, 2));
 		if (ratio <= p->radio)
 			return (1);
 	}
 	else if (p->r == 'c'){
-		ratio = sqrtf(powf(absx, 2) + powf(absy, 2));
+		ratio = sqrtf(pow(absx, 2) + pow(absy, 2));
 		if (ratio <= p->radio - 1)
 			return (0);
 		else if (ratio <= p->radio)
@@ -108,6 +120,8 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		read = fscanf(p.fd, "%c %f %f %f %c\n", &p.r, &p.x, &p.y, &p.radio, &p.c);
+		ft_round(&p.x);
+		ft_round(&p.y);
 		if (read == -1)
 			break ;
 		if (ft_square(&p))
