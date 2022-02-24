@@ -42,11 +42,13 @@ static int ft_ratio(t_paint *p, int i, int j)
 	if (p->r == 'C')
 	{
 		ratio = sqrtf(pow(absx, 2) + pow(absy, 2));
+		//printf("dist is == %f\n", ratio);
 		if (ratio <= p->radio)
 			return (1);
 	}
 	else if (p->r == 'c'){
 		ratio = sqrtf(pow(absx, 2) + pow(absy, 2));
+	//	printf("dist is == %f\n", ratio);
 		if (ratio <= p->radio - 1)
 			return (0);
 		else if (ratio <= p->radio)
@@ -120,8 +122,8 @@ int main(int argc, char **argv)
 	while (1)
 	{
 		read = fscanf(p.fd, "%c %f %f %f %c\n", &p.r, &p.x, &p.y, &p.radio, &p.c);
-		ft_round(&p.x);
-		ft_round(&p.y);
+		//ft_round(&p.x);
+		//ft_round(&p.y);
 		if (read == -1)
 			break ;
 		if (ft_square(&p))
